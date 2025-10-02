@@ -50,6 +50,7 @@ def copy_files_to_node(node):
 
         net_connect = ConnectHandler(**router)
         for filename in os.listdir(f'{user_directory}/lab_configs/{node["name"]}'):
+            net_connect.send_config_set(["ip http client source-interface GigabitEthernet1"])
             net_connect.send_command(f'copy http://{server_ip}:8000/{user_directory}/lab_configs/{node["name"]}/{filename} flash:{filename}',
                 expect_string = 'Destination')
             output = net_connect.send_command(filename, expect_string = r'confirm\]|#')
